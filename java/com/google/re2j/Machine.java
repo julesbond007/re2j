@@ -152,11 +152,6 @@ class Machine {
     return t;
   }
 
-  // free() returns t to the free pool.
-  private void free(Thread t) {
-    pool.add(t);
-  }
-
   // match() runs the machine over the input |in| starting at |pos| with the
   // RE2 Anchor |anchor|.
   // It reports whether a match was found.
@@ -260,6 +255,10 @@ class Machine {
   // the input string.
   private void step(Queue runq, Queue nextq, int pos, int nextPos, int c,
             int nextCond, int anchor, boolean atEnd) {
+    System.out.println("step()--start");
+
+    long start = System.nanoTime();
+            
     boolean longest = re2.longest;
     for (int j = 0; j < runq.size; ++j) {
       Queue.Entry entry = runq.dense[j];
@@ -330,6 +329,7 @@ class Machine {
       }
     }
     runq.size = 0;
+    System.out.println("step()--end" + (System.nanoTime() - start));
   }
 
   // add() adds an entry to |q| for |pc|, unless the |q| already has such an
@@ -338,6 +338,9 @@ class Machine {
   // gives the current position in the input.  |cond| is a bitmask of EMPTY_*
   // flags.
   private Thread add(Queue q, int pc, int pos, int[] cap, int cond, Thread t) {
+    System.out.println("add()--start");
+
+    long start = System.nanoTime();
     if (pc == 0) {
       return t;
     }
@@ -397,6 +400,8 @@ class Machine {
         t = null;
         break;
     }
+    
+    System.out.println("add()--end"+ (System.nanoTime() - start));
     return t;
   }
 
