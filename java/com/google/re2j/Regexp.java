@@ -326,7 +326,7 @@ class Regexp {
         }
         break;
       case CAPTURE:
-        if (x.cap != y.cap || x.name != y.name ||
+        if (x.cap != y.cap || !x.name.equals(y.name) ||
             !x.subs[0].equals(y.subs[0])) {
           return false;
         }

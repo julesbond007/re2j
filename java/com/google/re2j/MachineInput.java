@@ -143,7 +143,7 @@ abstract class MachineInput {
       if (pos > this.start && pos <= this.end) {
         int start = pos - 1;
         r1 = b[start--];
-        if (r1 >= 0x80) {  // decode UTF-8
+        if (r1 >= 0x7F) {  // decode UTF-8
           // Find start, up to 4 bytes earlier.
           int lim = pos - 4;
           if (lim < this.start) {
